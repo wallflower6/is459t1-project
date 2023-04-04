@@ -1,0 +1,55 @@
+{
+    "Comment": "IS459 Scrape Pipeline",
+    "StartAt": "ScrapeTweets",
+    "States": {
+      "ScrapeTweets": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:273066478790:function:is459t1-scraper-main",
+        "Retry" : [
+          {
+            "ErrorEquals": ["States.Timeout"],
+            "IntervalSeconds": 1,
+            "MaxAttempts": 3,
+            "BackoffRate": 1.0
+          }
+        ],
+        "Next": "CheckData"
+      },
+
+      "CheckData": {
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.TYPE",
+            "StringEquals": "NO_TWEETS",
+            "Next": "NoUpdates"
+          },
+          {
+            "Variable": "$.TYPE",
+            "StringEquals": "TWEETS",
+            "Next": "ScrapeReplies"
+          }
+        ]
+      },
+
+      "ScrapeReplies": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:273066478790:function:is459t1-scraper-replies",
+        "Retry" : [
+          {
+            "ErrorEquals": ["States.Timeout", "TooManyRequests"],
+            "IntervalSeconds": 900,
+            "MaxAttempts": 3,
+            "BackoffRate": 1.0
+          }
+        ],
+        "End": true
+      },
+
+      "NoUpdates": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:273066478790:function:is459t1-no-updates",
+        "End": true
+      }
+    }
+}

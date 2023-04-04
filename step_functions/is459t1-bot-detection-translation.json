@@ -1,0 +1,39 @@
+{
+    "Comment": "IS459 Bot Detection and Translation Pipeline",
+    "StartAt": "BotDetector1",
+    "States": {
+      "BotDetector1": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:273066478790:function:is459t1-bot-detector-1",
+        "Next": "CheckPoint"
+      },
+
+      "CheckPoint": {
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.TYPE",
+            "StringEquals": "PASSED",
+            "Next": "Translator"
+          },
+          {
+            "Variable": "$.TYPE",
+            "StringEquals": "LIMITED",
+            "Next": "BotDetector2"
+          }
+        ]
+      },
+
+      "BotDetector2": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:273066478790:function:is459t1-bot-detector-2",
+        "Next": "Translator"
+      },
+
+      "Translator": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-east-1:273066478790:function:is459t1-translator",
+        "End": true
+      }
+    }
+}
