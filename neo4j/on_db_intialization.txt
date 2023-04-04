@@ -1,0 +1,8 @@
+CREATE CONSTRAINT post_id IF NOT EXISTS FOR (p:Post) REQUIRE p.id IS UNIQUE;
+CREATE CONSTRAINT user_id IF NOT EXISTS FOR (u:User) REQUIRE u.id IS UNIQUE;
+CREATE CONSTRAINT topic IF NOT EXISTS FOR (t:Topic) REQUIRE t.topic IS UNIQUE
+
+CREATE (s:Sentiment {sentiment:"POSITIVE"});
+CREATE (s:Sentiment {sentiment:"NEGATIVE"});
+CREATE (s:Sentiment {sentiment:"NEUTRAL"});
+CREATE (s:Sentiment {sentiment:"MIXED"})

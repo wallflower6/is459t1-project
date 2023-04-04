@@ -1,0 +1,14 @@
+{
+    "ssoEnabled": false,
+    "ssoDiscoveryUrl": "https://example.com",
+    "standalone": true,
+    "standaloneProtocol": "neo4j+s",
+    "standaloneHost": "1ca92074.databases.neo4j.io",
+    "standalonePort": "7687",
+    "standaloneDatabase": "neo4j",
+    "standaloneDashboardName": "Zelenskyy Dashboard",
+    "standaloneDashboardDatabase": "neo4j",
+    "standaloneDashboardURL": "",
+    "standaloneUsername":"neo4j",
+    "standalonePassword":"Wk7kftUgayhn_WFTLOcsrPsV3HXf4_nEpSMkGjxy24M"
+}
